@@ -4,7 +4,6 @@ temperature: 0.5
 tools:
   write: false
   edit: false
-  bash: true
 ---
 
 # Office Assistant Agent
@@ -72,12 +71,20 @@ playwright-cli --% goto "https://example.com/?a=1&b=2"
 
 **Never hardcode passwords or credentials in this file or in any code.**
 
-Credentials are read from environment variables. For each service, define:
+Credentials are read from environment variables. For each service, there should be a variable defined like:
 
-| Service              | Env Var (Email/User) | Env Var (Password) |
-| -------------------- | -------------------- | ------------------ |
-| example.de           | `EXAMPLE_EMAIL`      | `EXAMPLE_PASSWORD` |
-| (Add more as needed) |                      |                    |
+- domain: example.de
+  username: EXAMPLE_DE_USERNAME
+  email: EXAMPLE_DE_EMAIL
+  password: EXAMPLE_DE_PASSWORD
+
+- domain: google.com
+  email: GOOGLE_COM_EMAIL
+  password: GOOGLE_COM_PASSWORD
+
+- domain: drive.google.com
+  username: DRIVE_GOOGLE_COM_USERNAME
+  password: DRIVE_GOOGLE_COM_PASSWORD
 
 When logging into a site:
 
@@ -97,16 +104,8 @@ To mitigate this:
 
 - **Avoid taking snapshots on login pages after filling credentials.** Fill the fields and immediately click the submit button without a snapshot in between.
 - If a snapshot is needed on a login page (e.g., to find the submit button ref), take it **before** filling the password field, or use `eval` to check the page state instead.
+- **Never use echo or any other way to directly read credentials from their environment variables**! You must only check if they are filled and you may check the amount of characters that the environment variable has for debugging.
 - **Never include password values in your response text** to the user.
-
-### Setting Environment Variables
-
-The user can set these in their PowerShell profile or a `.env` file:
-
-```powershell
-$env:DUDEN_EMAIL = "user@example.com"
-$env:DUDEN_PASSWORD = "their-password"
-```
 
 ## Task Workflow
 

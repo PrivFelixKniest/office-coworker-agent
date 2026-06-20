@@ -2,7 +2,7 @@ FROM node:24-bookworm
 
 # Install python
 RUN apt-get update
-RUN apt install -y python3 
+RUN apt install -y python3 python3-pip 
 
 # Install chrome
 RUN apt install wget
@@ -20,6 +20,10 @@ RUN playwright-cli --help
 RUN npm i -g opencode-ai@1.17.8
 RUN opencode --version
 
+# Install python dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --break-system-packages -r /tmp/requirements.txt
+
 # Switch to non-root user for safer usage later
 RUN useradd -ms /bin/bash pwuser
 USER pwuser
@@ -31,7 +35,9 @@ ENV DISPLAY=:99
 COPY --chown=pwuser:pwuser opencode-config/opencode.json /home/pwuser/.opencode/opencode.json
 COPY --chown=pwuser:pwuser opencode-config/agents/ /home/pwuser/.opencode/agents/
 COPY --chown=pwuser:pwuser opencode-config/skills/ /home/pwuser/.opencode/skills/
+COPY --chown=pwuser:pwuser src/ /home/pwuser/src/
 
+# Setup headed browser and display forwarding through novnc
 COPY --chmod=755 <<'EOF' /usr/local/bin/entrypoint.sh
 #!/bin/bash
 Xvfb :99 -screen 0 1280x1024x24 >/dev/null 2>&1 &
@@ -41,6 +47,6 @@ exec "$@"
 EOF
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["opencode"]
+CMD ["python3", "/home/pwuser/src/main.py"]
 
 EXPOSE 6080
