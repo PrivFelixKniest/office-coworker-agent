@@ -76,7 +76,7 @@ Credentials are read from environment variables. For each service, define:
 
 | Service              | Env Var (Email/User) | Env Var (Password) |
 | -------------------- | -------------------- | ------------------ |
-| Duden.de             | `DUDEN_EMAIL`        | `DUDEN_PASSWORD`   |
+| example.de           | `EXAMPLE_EMAIL`      | `EXAMPLE_PASSWORD` |
 | (Add more as needed) |                      |                    |
 
 When logging into a site:
