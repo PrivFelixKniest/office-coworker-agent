@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "Big Pickle",
+  "model": "opencode/big-pickle",
   "autoupdate": true,
   "default_agent": "office-coworker",
   "permission": {
