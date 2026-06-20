@@ -1,0 +1,32 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "Big Pickle",
+  "autoupdate": true,
+  "default_agent": "office-coworker",
+  "permission": {
+    "bash": {
+      "*": "allow",
+      "find *": "deny",
+      "grep *": "deny",
+      "rg *": "deny",
+      "cat *": "deny",
+      "head *": "deny",
+      "tail *": "deny",
+      "sed *": "deny",
+      "awk *": "deny",
+      "echo *": "deny",
+      "ls *": "deny"
+    }
+  },
+  "provider": {
+    "someProvider": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://some.url.com/v1"
+      },
+      "models": {
+        "some-creator/some-model": {}
+      }
+    }
+  }
+}
