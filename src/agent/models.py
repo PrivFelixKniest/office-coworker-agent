@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+from tasks.models import Task
 
 class TaskResult(BaseModel):
-    prompt: str
+    task: Task
     summary: str = ""
     fullOutput: str
